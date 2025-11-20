@@ -48,6 +48,18 @@ class JobProvider:
         
         with open(path, 'r') as f:
             return json.load(f)
+    
+    @staticmethod
+    def save(job_data: Dict[str, Any]) -> str:
+        """Save job description"""
+        Config.JOBS_DIR.mkdir(parents=True, exist_ok=True)
+        job_id = job_data.get('job_id', 'unknown')
+        path = Config.JOBS_DIR / f"{job_id}.json"
+        
+        with open(path, 'w') as f:
+            json.dump(job_data, f, indent=2)
+        
+        return str(path)
 
 
 class ResumeProvider:

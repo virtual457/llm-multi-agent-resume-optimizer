@@ -7,10 +7,12 @@ import os
 # Add parent directory to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from pathlib import Path
 from src.generator import Generator
 from src.evaluator import Evaluator
 from src.factuality_checker import FactualityChecker
 from src.reviser import Reviser
+from src.renderer import Renderer
 from src.providers import UserProvider, JobProvider, ResumeProvider
 from aro.llm_adapter import create_llm_adapter
 from dotenv import load_dotenv
@@ -131,11 +133,28 @@ def optimize_resume(username: str = "chandan", job_id: str = "job1"):
     
     # PHASE 4: Save Final Resume
     print("\n" + "="*70)
-    print("PHASE 4: SAVING FINAL RESUME")
+    print("PHASE 4: RENDERING & SAVING")
     print("="*70)
     
-    saved_path = ResumeProvider.save(resume, username, job_id)
-    print(f"  ✓ Saved to: {saved_path}")
+    # Save JSON
+    saved_json_path = ResumeProvider.save(resume, username, job_id)
+    print(f"  ✓ JSON saved to: {saved_json_path}")
+    
+    # Render to DOCX
+    print("\n  Rendering to DOCX...")
+    template_path = Path(__file__).parent.parent.parent / "templates" / "Chandan_Resume_Format.docx"
+    
+    if not template_path.exists():
+        print(f"  ⚠️  Template not found: {template_path}")
+        print(f"  ⚠️  Skipping DOCX generation")
+        saved_docx_path = None
+    else:
+        renderer = Renderer(str(template_path))
+        output_dir = Path(__file__).parent.parent.parent / "output"
+        output_dir.mkdir(exist_ok=True)
+        docx_output = output_dir / f"{username}_{job_id}.docx"
+        saved_docx_path = renderer.render(resume, str(docx_output))
+        print(f"  ✓ DOCX saved to: {saved_docx_path}")
     
     # Final Summary
     print("\n" + "="*70)
@@ -144,7 +163,10 @@ def optimize_resume(username: str = "chandan", job_id: str = "job1"):
     print(f"\nFinal Scores:")
     print(f"  Evaluation: {eval_result['total_score']}/100")
     print(f"  Factuality: {fact_result['factuality_score']}/100")
-    print(f"\nResume saved to: {saved_path}")
+    print(f"\nOutputs:")
+    print(f"  JSON: {saved_json_path}")
+    if saved_docx_path:
+        print(f"  DOCX: {saved_docx_path}")
     
     return resume, eval_result, fact_result
 

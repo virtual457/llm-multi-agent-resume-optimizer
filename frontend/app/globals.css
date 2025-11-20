@@ -1,0 +1,411 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Product+Sans:wght@400;700&display=swap');
+
+:root {
+  --google-blue: #4285f4;
+  --google-red: #ea4335;
+  --google-yellow: #fbbc04;
+  --google-green: #34a853;
+  --text-primary: #202124;
+  --text-secondary: #5f6368;
+  --bg-white: #ffffff;
+  --bg-light: #f8f9fa;
+  --border-light: #dadce0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-white);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Product Sans', 'Google Sans', sans-serif;
+}
+
+/* Google Loading Screen */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease-out;
+}
+
+.loading-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.google-loader {
+  display: flex;
+  gap: 12px;
+}
+
+.loader-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  animation: loaderBounce 1.4s ease-in-out infinite;
+}
+
+.loader-dot:nth-child(1) {
+  background: var(--google-blue);
+  animation-delay: 0s;
+}
+
+.loader-dot:nth-child(2) {
+  background: var(--google-red);
+  animation-delay: 0.2s;
+}
+
+.loader-dot:nth-child(3) {
+  background: var(--google-yellow);
+  animation-delay: 0.4s;
+}
+
+.loader-dot:nth-child(4) {
+  background: var(--google-green);
+  animation-delay: 0.6s;
+}
+
+@keyframes loaderBounce {
+  0%, 80%, 100% {
+    transform: scale(0.8) translateY(0);
+    opacity: 0.7;
+  }
+  40% {
+    transform: scale(1.2) translateY(-20px);
+    opacity: 1;
+  }
+}
+
+/* Mesh Background */
+.mesh-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.mesh-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: meshFloat 25s infinite ease-in-out;
+}
+
+.mesh-orb-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--google-blue) 0%, transparent 70%);
+  top: -10%;
+  left: -5%;
+  animation-delay: 0s;
+}
+
+.mesh-orb-2 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, var(--google-red) 0%, transparent 70%);
+  top: 20%;
+  right: -5%;
+  animation-delay: -8s;
+}
+
+.mesh-orb-3 {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, var(--google-yellow) 0%, transparent 70%);
+  bottom: -10%;
+  left: 30%;
+  animation-delay: -16s;
+}
+
+.mesh-orb-4 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, var(--google-green) 0%, transparent 70%);
+  top: 50%;
+  right: 20%;
+  animation-delay: -12s;
+}
+
+@keyframes meshFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+/* Google Buttons */
+.btn-google {
+  padding: 12px 32px;
+  font-family: 'Google Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 24px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.btn-google-primary {
+  background: var(--google-blue);
+  color: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.btn-google-primary:hover {
+  background: #1967d2;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15), 0 1px 4px rgba(0,0,0,0.12);
+  transform: translateY(-1px);
+}
+
+.btn-google-secondary {
+  background: white;
+  color: var(--text-primary);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.btn-google-secondary:hover {
+  background: var(--bg-light);
+  border-color: var(--text-secondary);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.12);
+}
+
+/* Google Card */
+.card-google {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: all 0.3s ease;
+}
+
+.card-google:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+/* Google Input */
+.input-google {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  font-family: 'Google Sans', sans-serif;
+  font-size: 1rem;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.input-google:focus {
+  border-color: var(--google-blue);
+  box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+}
+
+.textarea-google {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  font-family: 'Google Sans', sans-serif;
+  font-size: 1rem;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  outline: none;
+  resize: none;
+}
+
+.textarea-google:focus {
+  border-color: var(--google-blue);
+  box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(32, 33, 36, 0.6);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Modal Content */
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Progress Bar */
+.progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-light);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--google-blue), var(--google-red), var(--google-yellow), var(--google-green));
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Stat Cards */
+.stat-card {
+  background: var(--bg-white);
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.stat-card:nth-child(1):hover {
+  border-color: var(--google-blue);
+  box-shadow: 0 4px 12px rgba(66, 133, 244, 0.2);
+}
+
+.stat-card:nth-child(2):hover {
+  border-color: var(--google-red);
+  box-shadow: 0 4px 12px rgba(234, 67, 53, 0.2);
+}
+
+.stat-card:nth-child(3):hover {
+  border-color: var(--google-yellow);
+  box-shadow: 0 4px 12px rgba(251, 188, 4, 0.2);
+}
+
+.stat-card:nth-child(4):hover {
+  border-color: var(--google-green);
+  box-shadow: 0 4px 12px rgba(52, 168, 83, 0.2);
+}
+
+/* Bounce Animation */
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s ease-in-out infinite;
+}
+
+/* Fade Slide Animation */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-slide {
+  animation: fadeSlideUp 0.4s ease;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
